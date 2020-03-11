@@ -72,13 +72,26 @@ app.post('/api/user/login', (req, res) => {
             if (err) return res.status(400).send(err);
             res.cookie("x_auth", user.token).status(200).json({
                 loginSuccess: true
-            })
-        })
-    })
+            });
+        });
+    });
+});
+
+app.get('/api/user/logout', auth, (req, res) => {
+    //user._id come from auth
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
+        if (err) return res.json({ success: false, err })
+        return res.status(200).json({
+            sucess: true
+        });
+    });
+});
 
 
-})
+const port = process.env.PORT || 5000
 
+app.listen(port, () => {
+    console.log(`Server Running at ${port}`);
 
-app.listen(5000);
+});
 
