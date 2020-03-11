@@ -10,7 +10,7 @@ const { auth } = require('./middleware/auth')
 const config = require('./config/key');
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.json({ "hello": "Deployed" });
 });
 
 
